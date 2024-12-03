@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang chu</title>
+</head>
+<body>
+<h1>Danh sach hoc vien</h1>
+<p th:if="${msg} != null" th:text="${msg}"></p>
+<a th:href="@{/show-create-form}">Them moi</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Ten</th>
+        <th>Lop</th>
+    </tr>
+    <tr th:each="s,l: ${list}">
+        <td th:text="${l.count}"></td>
+        <td th:text="${s.name}"></td>
+    </tr>
+</table>
+</body>
+</html>
