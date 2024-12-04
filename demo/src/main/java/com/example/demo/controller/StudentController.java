@@ -41,6 +41,12 @@ public class StudentController {
         return "edit-form";
     }
 
+    @GetMapping("/{id}/show-view")
+    public String showView(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("student", studentService.findById(id));
+        return "view";
+    }
+
     @PostMapping("/save-student")
     public String save(Student student, RedirectAttributes redirectAttributes) {
         studentService.save(student);
