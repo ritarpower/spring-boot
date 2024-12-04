@@ -13,10 +13,20 @@
         <th>ID</th>
         <th>Ten</th>
         <th>Lop</th>
+        <th></th>
     </tr>
     <tr th:each="s,l: ${list}">
         <td th:text="${l.count}"></td>
         <td th:text="${s.name}"></td>
+        <td th:text="${s.clazz.name}"></td>
+        <td>
+            <a th:href="@{/{id}/show-edit-form(id=${s.id})}">Chinh sua</a>
+        </td>
+        <td>
+            <form method="post" th:action="@{/{id}/delete-student(id=${s.id})}">
+                <input type="submit" value="Xoa">
+            </form>
+        </td>
     </tr>
 </table>
 </body>

@@ -2,17 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Them moi</title>
+    <title>Title</title>
 </head>
 <body>
-<h2>Them moi</h2>
-<form th:action="@{/save-student}" method="post" th:object="${student}">
-    Ten<input type="text" th:field="*{name}">
+<h2>Chinh sua thong tin</h2>
+<form method="post" th:action="@{/edit-student}" th:object="${student}">
+    <input type="hidden" th:field="*{id}">
+    Ten<input type="text" id="name" th:field="*{name}">
     Lop
     <select th:field="*{clazz}">
         <option th:each="c : ${clazzes}" th:value="${c.id}" th:text="${c.name}"></option>
     </select>
-    <input type="submit" value="Them moi">
+    <input type="submit" value="Chinh sua">
 </form>
 </body>
 </html>
