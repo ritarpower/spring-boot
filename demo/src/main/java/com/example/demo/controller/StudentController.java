@@ -4,6 +4,9 @@ import com.example.demo.model.Student;
 import com.example.demo.service.Clazz.IClazzService;
 import com.example.demo.service.Student.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,9 @@ public class StudentController {
     private IClazzService clazzService;
 
     @GetMapping
-    public String showList(Model model) {
-        List<Student> list = studentService.findAll();
+    public String showList(@RequestParam (name = "page", required = false, defaultValue = "0") int page, Model model) {
+        Pageable pageable = PageRequest.of(page, 3);
+        Page<Student> list = studentService.findAll(pageable);
         model.addAttribute("list", list);
         return "index";
     }

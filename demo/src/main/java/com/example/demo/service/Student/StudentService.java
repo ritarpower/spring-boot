@@ -3,6 +3,8 @@ package com.example.demo.service.Student;
 import com.example.demo.model.Student;
 import com.example.demo.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class StudentService implements IStudentService {
     private IStudentRepository studentRepository;
 
     @Override
-    public List<Student> findAll() {
-        return studentRepository.findAll();
+    public Page<Student> findAll(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     @Override
