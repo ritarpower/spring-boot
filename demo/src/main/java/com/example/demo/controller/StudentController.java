@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/show-edit-form")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("clazzes", clazzService.findAll());
         model.addAttribute("student", studentService.findById(id));
         return "edit-form";
@@ -55,7 +55,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}/delete-student")
-    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         studentService.delete(studentService.findById(id));
         redirectAttributes.addFlashAttribute("msg", "Da xoa thanh cong!");
         return "redirect:/";
