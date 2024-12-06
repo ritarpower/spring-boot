@@ -1,18 +1,21 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Student;
+import com.example.demo.model.StudentDTO;
 import com.example.demo.service.Clazz.IClazzService;
 import com.example.demo.service.Student.IStudentService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -34,7 +37,7 @@ public class StudentController {
     @GetMapping("/show-create-form")
     public String showCreateForm(Model model) {
         model.addAttribute("clazzes", clazzService.findAll());
-        model.addAttribute("student", new Student());
+        model.addAttribute("student", new StudentDTO());
         return "create-form";
     }
 
@@ -51,8 +54,20 @@ public class StudentController {
         return "view";
     }
 
+    /*@Valid voi @Validated khac gi nhau*/
+
     @PostMapping("/save-student")
-    public String save(Student student, RedirectAttributes redirectAttributes) {
+    public String save(@Valid @ModelAttribute("student") StudentDTO studentDTO,
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes,
+                       Model model) {
+        new StudentDTO().validate(studentDTO, bindingResult);
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("clazzes", clazzService.findAll());
+            return "create-form";
+        }
+        Student student = new Student();
+        BeanUtils.copyProperties(studentDTO, student);
         studentService.save(student);
         redirectAttributes.addFlashAttribute("msg", "Them moi thanh cong");
         return "redirect:/";
@@ -69,5 +84,12 @@ public class StudentController {
         studentService.delete(studentService.findById(id));
         redirectAttributes.addFlashAttribute("msg", "Da xoa thanh cong!");
         return "redirect:/";
+    }
+
+    @GetMapping("/find-student")
+    public String findStudent(@RequestParam("name") String name, Model model) {
+        Page<Student> list = studentService.findByName(name, PageRequest.of(0, 3));
+        model.addAttribute("list", list);
+        return "index";
     }
 }

@@ -8,6 +8,7 @@
 <h2>Them moi</h2>
 <form th:action="@{/save-student}" method="post" th:object="${student}">
     Ten<input type="text" th:field="*{name}">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
     Lop
     <select th:field="*{clazz}">
         <option th:each="c : ${clazzes}" th:value="${c.id}" th:text="${c.name}"></option>

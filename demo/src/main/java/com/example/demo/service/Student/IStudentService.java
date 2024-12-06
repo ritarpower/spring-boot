@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface IStudentService {
     Page<Student> findAll(Pageable pageable);
 
+    Page<Student> findByName(String Name, Pageable pageable);
+
     void save(Student student);
 
     Student findById(Integer id);

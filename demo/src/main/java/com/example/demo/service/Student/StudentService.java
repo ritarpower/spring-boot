@@ -21,6 +21,11 @@ public class StudentService implements IStudentService {
     }
 
     @Override
+    public Page<Student> findByName(String name, Pageable pageable) {
+        return studentRepository.findByName(name, pageable);
+    }
+
+    @Override
     public void save(Student student) {
         studentRepository.save(student);
     }

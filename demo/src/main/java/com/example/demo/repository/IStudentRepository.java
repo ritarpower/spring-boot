@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface IStudentRepository extends JpaRepository<Student, Integer> {
     @Query(value = "SELECT s from Student s JOIN FETCH s.clazz")
     Page<Student> findAll(Pageable pageable);
+
+    @Query(value = "SELECT s FROM Student s JOIN FETCH s.clazz WHERE s.name LIKE %?1%")
+    Page<Student> findByName(String name, Pageable pageable);
 }
