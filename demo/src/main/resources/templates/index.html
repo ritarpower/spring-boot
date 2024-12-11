@@ -9,8 +9,8 @@
 <p th:if="${msg} != null" th:text="${msg}"></p>
 <a th:href="@{/show-create-form}">Them moi</a>
 
-<form th:action="@{/find-student}" method="get">
-    Ten<input type="text" th:id="name" th:name="name">
+<form th:action="@{/}" method="get">
+    Ten<input type="text" th:id="name" th:name="name" th:value="${name}">
     <input type="submit" value="Tim kiem">
 </form>
 
@@ -38,8 +38,8 @@
         </td>
     </tr>
 </table>
-<a th:href="@{/(page=${list.number -1})}" th:if="${list.hasPrevious()}">Trang truoc</a>
-<a th:each="i: ${#numbers.sequence(0, list.totalPages)}" th:href="@{/(page=${i})}" th:text="${i+1}"></a>
-<a th:href="@{/(page=${list.number +1})}" th:if="${list.hasNext()}">Trang sau</a>
+<a th:href="@{/(page=${list.number -1},name=${name})}" th:if="${list.hasPrevious()}">Trang truoc</a>
+<a th:each="i: ${#numbers.sequence(0, list.totalPages)}" th:href="@{/(page=${i},name=${name})}" th:text="${i+1}"></a>
+<a th:href="@{/(page=${list.number +1},name=${name})}" th:if="${list.hasNext()}">Trang sau</a>
 </body>
 </html>

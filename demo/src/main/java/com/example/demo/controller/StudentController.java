@@ -27,12 +27,22 @@ public class StudentController {
     private IClazzService clazzService;
 
     @GetMapping
-    public String showList(@RequestParam (name = "page", required = false, defaultValue = "0") int page, Model model) {
+    public String showList(@RequestParam (name = "page", required = false, defaultValue = "0") int page,
+                           @RequestParam(name = "name", required = false, defaultValue = "") String name, Model model) {
         Pageable pageable = PageRequest.of(page, 3);
-        Page<Student> list = studentService.findAll(pageable);
+//        Page<Student> list = studentService.findAll(pageable);
+        Page<Student> list = studentService.findByName(name, pageable);
+        model.addAttribute("name", name);
         model.addAttribute("list", list);
         return "index";
     }
+
+//    @GetMapping("/find-student")
+//    public String findStudent(@RequestParam("name") String name,@RequestParam (name = "page", required = false, defaultValue = "0") int page, Model model) {
+//        Page<Student> list = studentService.findByName(name, PageRequest.of(0, 3));
+//        model.addAttribute("list", list);
+//        return "index";
+//    }
 
     @GetMapping("/show-create-form")
     public String showCreateForm(Model model) {
@@ -86,10 +96,4 @@ public class StudentController {
         return "redirect:/";
     }
 
-    @GetMapping("/find-student")
-    public String findStudent(@RequestParam("name") String name, Model model) {
-        Page<Student> list = studentService.findByName(name, PageRequest.of(0, 3));
-        model.addAttribute("list", list);
-        return "index";
-    }
 }
