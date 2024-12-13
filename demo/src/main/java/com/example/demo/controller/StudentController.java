@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +31,6 @@ public class StudentController {
     public String showList(@RequestParam (name = "page", required = false, defaultValue = "0") int page,
                            @RequestParam(name = "name", required = false, defaultValue = "") String name, Model model) {
         Pageable pageable = PageRequest.of(page, 3);
-//        Page<Student> list = studentService.findAll(pageable);
         Page<Student> list = studentService.findByName(name, pageable);
         model.addAttribute("name", name);
         model.addAttribute("list", list);

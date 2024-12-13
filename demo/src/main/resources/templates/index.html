@@ -39,7 +39,7 @@
     </tr>
 </table>
 <a th:href="@{/(page=${list.number -1},name=${name})}" th:if="${list.hasPrevious()}">Trang truoc</a>
-<a th:each="i: ${#numbers.sequence(0, list.totalPages)}" th:href="@{/(page=${i},name=${name})}" th:text="${i+1}"></a>
+<a th:each="i: ${#numbers.sequence(0, list.totalPages)}" th:href="@{/(page=${i},name=${name})}" th:text="${i+1}" th:if="${(i+1)<=list.totalPages}"></a>
 <a th:href="@{/(page=${list.number +1},name=${name})}" th:if="${list.hasNext()}">Trang sau</a>
 </body>
 </html>
